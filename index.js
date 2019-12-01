@@ -47,13 +47,24 @@ async function getCourses() {
 
     const courses = await Course
     //find({ author:'MOSH', isPublished:true })
+    // Comparison Operators
     //.find({ price :{ $gte: 10 , $lte:20 }})
     //.find({ price :{ $in: [10,15,20] }})
-    .find()
-    .or([{author:'MOSH'},{isPublished:true}])
+    // Logical Operators
+    // .find()
+    // .or([{author:'MOSH'},{isPublished:true}])
+    // Regular Expression
+    // Starts with Mosh : Use ^
+    .find({ author: /^Mosh/ })
+    // Ends with Hamedani : Use $ i for Case Insensitive
+    .find({ author: /Hamedani$/i })
+    // Contains Mosh Anywhere
+    .find({ author: /.*Mosh.*/i })
     .limit(10)
     .sort({ name:1 })
-    .select({ name:1, tags:1 });
+    .select({ name:1, tags:1 })
+    // To get the number of documents.
+    .count();
     console.log(courses);
 }
 
