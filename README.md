@@ -18,21 +18,38 @@ const courseSchema = new mongoose.Schema({       name: String,      price: N
 // Using a SchemaType object 
 const courseSchema = new mongoose.Schema({      isPublished: { type: Boolean, default: false } });
 - Supported types are: String, Number, Date, Buffer (for storing binary data),
-Boolean and ObjectID. - Once we have a schema, we need to compile it into a model. A model is like a class. It’s a blueprint for creating objects: 
+Boolean and ObjectID.
+- Once we have a schema, we need to compile it into a model. A model is like a class. It’s a blueprint for creating objects: 
+
+
 // Creating a model 
 const Course = mongoose.model(‘Course’, courseSchema);
+
+
 CRUD Operations 
+
+
 // Saving a document 
 let course = new Course({ name: ‘…’ });
 course = await course.save();
+
+
 // Querying documents
 const courses = await Course    .ﬁnd({ author: ‘Mosh’, isPublished: true })   .skip(10)   .limit(10)    .sort({ name: 1, price: -1 })    .select({ name: 1, price: 1 });
+
+
 // Updating a document (query ﬁrst)
 const course = await Course.ﬁndById(id); if (!course) return; course.set({ name: ‘…’ }); course.save();
+
+
 // Updating a document (update ﬁrst)
 const result = await Course.update({ _id: id }, {     $set: { name: ‘…’ }  });
+
+
 // Updating a document (update ﬁrst) and return it
 const result = await Course.ﬁndByIdAndUpdate({ _id: id }, {     $set: { name: ‘…’ }  }, { new: true });
+
+
 // Removing a document
 const result = await Course.deleteOne({ _id: id });
 const result = await Course.deleteMany({ _id: id }); 
